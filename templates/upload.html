@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Upload an Image for OCR</h1>
+        </header>
+        
+        <form method="post" enctype="multipart/form-data" class="upload-form">
+            <div class="form-group">
+                <label for="file" class="form-label">Choose an Image:</label>
+                <input type="file" name="files[]" multiple id="file" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="action" class="form-label">Image Processing:</label>
+                <select id="action" name="action" class="form-select">
+                    <option value="none">None</option>
+                    <option value="gray">Grayscale</option>
+                    <option value="blur">Blur</option>
+                    <option value="sharpen">Sharpen</option>
+                    <option value="resize">Resize</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="button primary">Upload</button>
+        </form>
+        
+        {% if filename %}
+            <div class="results">
+                <h2>Uploaded Image</h2>
+                <p>Processing Action: <strong>{{ action }}</strong></p>
+                <h3>Extracted Text:</h3>
+                <pre class="extracted-text">{{ text }}</pre>
+                
+                <h3>Download Spreadsheet:</h3>
+                <a href="{{ url_for('download_file', filename=spreadsheet_path) }}" class="button primary">Download Spreadsheet</a>
+            </div>
+        {% endif %}
+        
+        <div class="navigation">
+            <a href="{{ url_for('home') }}" class="button secondary">Home</a>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    
+</body>
+</html>
